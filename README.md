@@ -20,7 +20,9 @@ To reset or create your local PostgreSQL database using environment settings:
 ./setup_db.sh
 ```
 
-to make this executable run : chmod +x setup_db.sh
+to make this executable run :
+
+chmod +x setup_db.sh
 
 
 ## How to run db/setup.sql
