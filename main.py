@@ -1,35 +1,30 @@
 # main.py
 import json
 from config.connection import get_db_connection
-from src.seed import (
-    run_sql_file,
-    seed_users_table,
-    seed_venues_table,
-    seed_events_table,
-    seed_rsvp_table,
-)
+from src.seed import SeedData,seed
+from typing import cast
 
-
-def load_data(filepath):
+def load_data(filepath:str):
     with open(filepath) as file:
         return json.load(file)
-
-
-if __name__ == "__main__":
+    
+    
+def main() -> None:
+   
+    
+    data= {
+        "users": load_data("db/data/users.json"),
+        "venues": load_data("db/data/venues.json"),
+        "events":load_data("db/data/events.json"),
+        "rsvps":load_data("db/data/rsvps.json")}
+        
     conn = get_db_connection()
     try:
-        print("Rebuilding database structures...")
-        run_sql_file(conn, "db/setup.sql")
-
-        print("Seeding tables...")
-        seed_users_table(conn, load_data("db/data/users.json"))
-        seed_venues_table(conn, load_data("db/data/venues.json"))
-        seed_events_table(conn, load_data("db/data/events.json"))
-        seed_rsvp_table(conn, load_data("db/data/rsvps.json"))
-
+        seed(conn,cast(SeedData,data))
         print("Database successfully seeded!")
-    except Exception:
-        conn.rollback()
-        raise
+        
     finally:
         conn.close()
+
+if __name__ == "__main__":
+    main()
