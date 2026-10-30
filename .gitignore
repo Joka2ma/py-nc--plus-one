@@ -1,3 +1,11 @@
-venv
+  __pycache__/
+  *.pyc
+  venv/
+  .venv/
+  .env.development
+  .env.test__pycache__/
+*.pyc
+venv/
+.venv/
 .env.development
-.env.example
+.env.test
