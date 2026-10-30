@@ -1,8 +1,11 @@
 # main.py
+from fastapi import FastAPI
 import json
 from config.connection import get_db_connection
-from src.seed import SeedData,seed
+from src.seed import seed,SeedData
 from typing import cast
+
+
 
 def load_data(filepath:str):
     with open(filepath) as file:

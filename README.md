@@ -8,7 +8,7 @@ statistics about their audience.
 
 ## Project architecture
 
-![Database schema diagram showing users, venues, events and rsvps](image.png)
+![Database schema diagram showing users, venues, events and rsvps]![alt text](image-1.png))
 
 ## Status
 
@@ -97,8 +97,17 @@ pytest
 
 Type checking:
 
+`#``bash
+py main.py src config
+
+Type checking (mypy is installed as a separate uv tool, because it has no
+build for Python 3.15 yet):
+
 ```bash
-mypy main.py src config
+uv tool install mypy --with types-psycopg2
+mypy
+```
+
 ```
 
 ## Checking the data

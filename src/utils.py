@@ -1,6 +1,7 @@
 # Normalise users email and address . strip white spaces and email to all lower case
 
 import bcrypt
+from datetime import datetime 
 
 
 def normalise_email(email:str)-> str:
@@ -26,3 +27,19 @@ def hash_password(password:str) -> str:
         str: _description_
     """
     return bcrypt.hashpw(password.encode(),bcrypt.gensalt()).decode()
+
+
+def validate_event_times (starts_at:str,ends_at:str) -> None:
+    """Checks that an event does not end before it starts on the
+    the same day. 
+    
+    This  will validate the event before it entered into the database
+    """
+    
+    start = datetime.fromisoformat(starts_at)
+    end = datetime.fromisoformat(ends_at)
+    
+    if start.date() == end.date() and end < start:
+        raise ValueError(
+            f"ends at ({ends_at}) must not before start_at ({starts_at})"
+        )

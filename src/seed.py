@@ -1,6 +1,6 @@
 # src/seed.py
 
-from src.utils import normalise_email,hash_password
+from src.utils import normalise_email,hash_password,validate_event_times
 from psycopg2.extensions import connection
 from typing import TypedDict
 
@@ -73,6 +73,7 @@ def seed_venues_table(conn:connection, venues_data:list[VenueRow]):
 def seed_events_table(conn:connection, events_data:list[EventRow]):
     with conn.cursor() as cursor:
         for e in events_data:
+            validate_event_times(e["starts_at"],e["ends_at"])
             cursor.execute(
                 "INSERT INTO Events(title, description, starts_at, ends_at, organiser_id, venue_id) "
                 "VALUES (%s, %s, %s, %s, %s, %s);",
